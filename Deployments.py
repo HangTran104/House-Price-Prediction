@@ -25,7 +25,7 @@ def HousePrice_Prediction(input_data):
   results = np.exp(prediction).round(2)
 
   # print(prediction)
-  return print(f'You need to prepare about {results} million dong for buy your desire house') 
+  return print(f'You need to prepare about {results} million Vietnam dong (VND) to buy your desire house') 
 
 def main():
   # Giving app an title
