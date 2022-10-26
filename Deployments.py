@@ -12,19 +12,20 @@ model = pickle.load(open('RandomForestModel.sav', 'rb'))
 def HousePrice_Prediction(input_data):
   
   # Convert the input data to an array 2D
-  df_input = pd.DataFrame(input_data, columns=['Dien_tich', 'Dien_tich_su_dung', 'Nha_ve_sinh', 'Hem_rong', 'So_lau',
+  df_input = pd.DataFrame(input_data, index=['Dien_tich', 'Dien_tich_su_dung', 'Nha_ve_sinh', 'Hem_rong', 'So_lau',
        'Chieu_dai', 'So_phong', 'Quan_Huyện Nhà Bè', 'Rong', 'Duong_mat_tien',
-       'Quan_Quận 10'])
+       'Quan_Quận 10']).T
   num = ['Chieu_dai', 'Rong', 'Dien_tich', 'Dien_tich_su_dung']
   rb = RobustScaler()
   rb.fit(df_input[num])
-  X_scale[num] = rb.transform(df_input[num])
+  df_input[num] = rb.transform(df_input[num])
 
   # Prediction 
-  prediction = model.predict(X_scale)
+  prediction = model.predict(df_input)
+  results = np.exp(prediction)
 
-  print(prediction)
-  return np.exp(prediction)
+  # print(prediction)
+  return results
 
 def main():
   # Giving app an title
