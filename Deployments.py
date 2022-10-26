@@ -22,10 +22,10 @@ def HousePrice_Prediction(input_data):
 
   # Prediction 
   prediction = model.predict(df_input)
-  results = np.exp(prediction)
+  results = np.exp(prediction).round(2)
 
   # print(prediction)
-  return results
+  return print(f'You need to prepare about {results} million dong for buy your desire house') 
 
 def main():
   # Giving app an title
