@@ -4,7 +4,7 @@ import streamlit as st
 
 
 # Loading the saved model
-model = pickle.load(open('RandomForestModel.joblib'))
+model = pickle.load(open('RandomForestModel.sav'))
 
 
 def HousePrice_Prediction(input_data):
