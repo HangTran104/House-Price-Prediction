@@ -1,11 +1,10 @@
 import numpy as np
 import pickle
 import streamlit as st
-from joblib import dump, load
 
 
 # Loading the saved model
-model = load('RandomForestModel.joblib')
+model = pickle.load(open('RandomForestModel.joblib'))
 
 
 def HousePrice_Prediction(input_data):
