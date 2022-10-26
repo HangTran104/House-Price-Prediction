@@ -1,5 +1,5 @@
 import numpy as np
-import pandas as np
+import pandas as pd
 from sklearn.preprocessing import RobustScaler
 import pickle
 import streamlit as st
