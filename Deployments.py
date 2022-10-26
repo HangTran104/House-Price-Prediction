@@ -1,4 +1,6 @@
 import numpy as np
+import pandas as np
+from sklearn.preprocessing import RobustScaler
 import pickle
 import streamlit as st
 
@@ -10,10 +12,16 @@ model = pickle.load(open('RandomForestModel.sav', 'rb'))
 def HousePrice_Prediction(input_data):
   
   # Convert the input data to an array 2D
-  input_data_array = np.array(input_data)
+  df_input = pd.DataFrame(input_data, columns=['Dien_tich', 'Dien_tich_su_dung', 'Nha_ve_sinh', 'Hem_rong', 'So_lau',
+       'Chieu_dai', 'So_phong', 'Quan_Huyện Nhà Bè', 'Rong', 'Duong_mat_tien',
+       'Quan_Quận 10'])
+  num = ['Chieu_dai', 'Rong', 'Dien_tich', 'Dien_tich_su_dung']
+  rb = RobustScaler()
+  rb.fit(df_input[num])
+  X_scale[num] = rb.transform(df_input[num])
 
   # Prediction 
-  prediction = model.predict(input_data_array)
+  prediction = model.predict(X_scale)
 
   print(prediction)
   return np.exp(prediction)
@@ -22,9 +30,7 @@ def main():
   # Giving app an title
   st.title("House Price Prediction Web App")
 
-  ['Dien_tich', 'Dien_tich_su_dung', 'Nha_ve_sinh', 'Hem_rong', 'So_lau',
-       'Chieu_dai', 'So_phong', 'Quan_Huyện Nhà Bè', 'Rong', 'Duong_mat_tien',
-       'Quan_Quận 10']
+  
 
   # Getting the input data from the user
   Dientich = st.text_input('The space area of the house')
@@ -36,6 +42,10 @@ def main():
   nhabe = st.text_input('Your house is needed to located in Nha Be District or not? 0 for No and 1 for Yes')
   rong = st.text_input('The width of the house')
   quan10 = st.text_input('Your house is needed to located in Quan 10 or not?')
+  
+  df_input = pd.DataFrame(['Dien_tich', 'Dien_tich_su_dung', 'Nha_ve_sinh', 'Hem_rong', 'So_lau',
+       'Chieu_dai', 'So_phong', 'Quan_Huyện Nhà Bè', 'Rong', 'Duong_mat_tien',
+       'Quan_Quận 10']
 
   # Code for prediction
   houseprice = ''
